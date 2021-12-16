@@ -1,0 +1,11 @@
+# @package policy
+_target_: maze_action_set_es.agents.brute_force_policy.BruteForcePolicy
+
+# Simulation environment used for action sampling
+simulated_env:
+  _target_: maze.core.utils.config_utils.make_env
+  env: ${env}
+  wrappers: ${wrappers}
+
+# Number of action candidates to consider for simulation.
+max_simulations_per_step: ~

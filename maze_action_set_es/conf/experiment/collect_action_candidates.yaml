@@ -1,0 +1,21 @@
+# @package _global_
+
+defaults:
+  - override /runner: parallel
+  - override /env: unitary
+  - override /model: ~
+  - override /reward: flat
+  - override /wrappers: collect_actions_recover
+  - override /policy: brute_force_policy
+
+runner:
+  record_trajectory: false
+  record_event_logs: false
+
+env:
+
+  observation_conversion:
+    - _target_: maze_action_set_es.space_interfaces.observation_conversion.dict_unitary.ObservationConversion
+      critical_state_observer:
+        _target_: maze_action_set_es.critical_state_observer.rho_threshold_critical_state_observer.RhoThresholdCriticalStateObserver
+        max_rho: 1.0

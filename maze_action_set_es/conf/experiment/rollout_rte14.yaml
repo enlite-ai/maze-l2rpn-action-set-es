@@ -1,0 +1,11 @@
+# @package _global_
+
+defaults:
+  - override /env: unitary
+  - override /model: default
+  - override /wrappers: default
+  - override /reward: flat
+
+runner:
+  record_trajectory: false
+  record_event_logs: false

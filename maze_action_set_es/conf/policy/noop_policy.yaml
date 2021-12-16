@@ -1,0 +1,2 @@
+# @package policy
+_target_: maze_action_set_es.agents.noop_policy.NoopPolicy

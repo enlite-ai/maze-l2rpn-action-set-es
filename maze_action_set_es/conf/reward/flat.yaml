@@ -1,0 +1,8 @@
+# @package env
+
+core_env:
+  reward:
+    _target_: grid2op.Reward.FlatReward.FlatReward
+  reward_aggregator:
+    _target_: maze_action_set_es.reward.default.RewardAggregator
+    reward_scale: 1

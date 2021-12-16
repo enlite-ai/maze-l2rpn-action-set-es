@@ -1,0 +1,14 @@
+# @package model
+_target_: maze.perception.models.custom_model_composer.CustomModelComposer
+
+distribution_mapper_config: []
+
+policy:
+  _target_: maze.perception.models.policies.ProbabilisticPolicyComposer
+  networks:
+    - _target_: maze_action_set_es.models.unitary.actor.PolicyNet
+      non_lin: torch.nn.ReLU
+      hidden_units: [512, 512, 512, 512]
+  substeps_with_separate_agent_nets: []
+
+critic: ~

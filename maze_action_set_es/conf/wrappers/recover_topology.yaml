@@ -1,0 +1,30 @@
+# @package wrappers
+maze_action_set_es.wrappers.random_chronics_wrapper.RandomChronicsWrapper:
+  seeds:
+    _target_: maze_action_set_es.env.seeds.seeds_for_power_grid
+    power_grid: ${env.core_env.power_grid}
+maze_action_set_es.wrappers.recover_topology_wrapper.RecoverTopologyWrapper:
+  recover_if_critical: false
+  max_rho: 0.95
+  recovery_topology: ~
+maze_action_set_es.wrappers.critical_state_trainer_wrapper.CriticalStateTrainerWrapper:
+  do_skip: true
+  raise_exception_on_impossible_seed: false
+maze.core.wrappers.observation_normalization.observation_normalization_wrapper.ObservationNormalizationWrapper:
+  default_strategy: maze.core.wrappers.observation_normalization.normalization_strategies.mean_zero_std_one.MeanZeroStdOneObservationNormalizationStrategy
+  default_strategy_config:
+    clip_range: [~, ~]
+    axis: [0]
+  sampling_policy:
+    _target_: maze_action_set_es.agents.l2rpn_random_policy.L2RPNRandomPolicy
+  statistics_dump: obs_norm_statistics.pkl
+  default_statistics: ~
+  exclude:
+    - features_ready
+    - action_mask
+    - critical_state
+  manual_config: ~
+maze.core.wrappers.monitoring_wrapper.MazeEnvMonitoringWrapper:
+  observation_logging: false
+  action_logging: true
+  reward_logging: true

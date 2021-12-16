@@ -1,0 +1,34 @@
+# @package env
+_target_: maze_action_set_es.env.maze_env.Grid2OpEnvironment
+
+core_env:
+  _target_: maze_action_set_es.env.core_env.Grid2OpCoreEnvironment
+  power_grid: "rte_case14_realistic"
+  difficulty: 'competition'
+  reward:
+    _target_: grid2op.Reward.LinesCapacityReward.LinesCapacityReward
+    rewards:
+      - name: "L2RPNSandBoxScore"
+        _target_: grid2op.Reward.L2RPNSandBoxScore.L2RPNSandBoxScore
+        kpi: yes
+      - name: "RedispReward"
+        _target_: grid2op.Reward.RedispReward.RedispReward
+        kpi: yes
+      - name: "LinesCapacityReward"
+        _target_: grid2op.Reward.LinesCapacityReward.LinesCapacityReward
+        kpi: yes
+      - name: "FlatReward"
+        _target_: grid2op.Reward.FlatReward.FlatReward
+        kpi: true
+      - name: "GameplayReward"
+        _target_: grid2op.Reward.GameplayReward.GameplayReward
+        kpi: yes
+      - name: "EconomicReward"
+        _target_: grid2op.Reward.EconomicReward.EconomicReward
+        kpi: yes
+      - name: "LinesReconnectedReward"
+        _target_: grid2op.Reward.LinesReconnectedReward.LinesReconnectedReward
+        kpi: yes
+  reward_aggregator:
+    _target_: maze_action_set_es.reward.default.RewardAggregator
+    reward_scale: 0.001

@@ -1,0 +1,26 @@
+# @package policy
+_target_: maze_action_set_es.agents.simulation_search_policy.SimulationSearchPolicy
+
+# Simulation environment used for action sampling
+simulated_env:
+  _target_: maze.core.utils.config_utils.make_env
+  env: ${env}
+  wrappers: ${wrappers}
+
+# Policy to sample action candidates with
+torch_policy:
+  _target_: maze.core.agent.serialized_torch_policy.SerializedTorchPolicy
+
+  # (1) Specify where the state dict and spaces config to load reside
+  state_dict_file:  state_dict.pt
+  spaces_dict_file: spaces_config.pkl
+
+  # (2) If using observation normalization, you might want to check the wrappers config
+  #     to make sure the correct statistics are loaded.
+
+  model: ${model}
+
+  device: cpu
+
+# Number of action candidates to consider for simulation.
+top_k_candidates: 7

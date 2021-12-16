@@ -1,0 +1,18 @@
+# @package env
+action_conversion:
+  - _target_: maze_action_set_es.space_interfaces.action_conversion.dict_unitary.ActionConversion
+    action_selection_vector: ~
+    action_selection_vector_dump: # you can provide a path to a reduced unitary action space dump here (.npy)
+    set_line_status: false
+    change_line_status: false
+    set_topo_vect: true
+    change_bus_vect: false
+    redispatch: false
+    curtail: false
+    storage: false
+
+observation_conversion:
+  - _target_: maze_action_set_es.space_interfaces.observation_conversion.dict_unitary.ObservationConversion
+    critical_state_observer:
+      _target_: maze_action_set_es.critical_state_observer.rho_threshold_critical_state_observer.RhoThresholdCriticalStateObserver
+      max_rho: 0.98

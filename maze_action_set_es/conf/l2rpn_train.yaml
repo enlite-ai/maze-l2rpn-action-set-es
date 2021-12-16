@@ -1,0 +1,48 @@
+defaults:
+  - l2rpn
+  - env: unitary
+  - wrappers: default
+  - reward: flat
+  - model: default
+  - optional critic: default
+  - algorithm: es
+  - runner: dev
+
+  # --- specializations ---
+  # algorithm
+  - optional algorithm_runner: ${algorithm}-${runner}
+  # configuration
+  - optional configuration: default
+  - optional algorithm_configuration: ${algorithm}-${configuration}
+  # launcher
+  - optional launcher: basic
+  - optional runner_configuration: ${runner}-${configuration}
+
+log_base_dir: outputs
+
+input_dir: ""
+
+project:
+  name: l2rpn-action-set-es
+
+# Maze seeding. If no seeds are given they are generated and the seeds used are documented in
+# the hydra_config.yaml file in order to reproduce experiments.
+seeding:
+  # Base seed for creating env seeds
+  env_base_seed: ~
+  # Base seed for creating agent seeds
+  agent_base_seed: ~
+  # Specify whether to set the cudnn determinism flag, this will ensure guaranty when working on the gpu, however some
+  # torch modules will raise runtime errors, and the processing speed will be decreased.
+  cudnn_determinism_flag: false
+
+# Configuration for Hydra
+hydra:
+  # Local trainings
+  run:
+    # note that the directory name is based on microseconds (%f) to make it extremely unlikely that simultaneously
+    # started runs do not accidentally write to the same output directory
+    dir: ${log_base_dir}/${hydra:runtime.choices.env}-${hydra:runtime.choices.model}-${hydra:runtime.choices.algorithm}-${hydra:runtime.choices.runner}/${now:%Y-%m-%d_%H-%M-%f}
+  # Training launched through launchers (i.e. kubernetes-based)
+  sweep:
+    dir: ${log_base_dir}/sweep/${now:%Y-%m-%d_%H-%M-%f}
